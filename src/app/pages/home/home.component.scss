@@ -1,0 +1,23 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    height: calc(100vh - 64px - 64px);
+
+    .title {
+        font-weight: 500;
+        color: rgb(37, 35, 41);
+    }
+
+    .toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        button:not(:last-child) {
+            margin-right: 20px;
+        }
+    }
+}

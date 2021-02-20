@@ -1,0 +1,43 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .field {
+        width: 100%;
+    }
+
+    ::ng-deep .metrics-select {
+        display: flex;
+        flex-direction: column;
+
+        .mat-button-toggle-group {
+            display: flex;
+
+            .mat-button-toggle {
+                flex: 1 1 0;
+                width: 150px;
+            }
+        }
+
+        .mat-button-toggle-label-content {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}
+
+.alternatives {
+    .inputs {
+        display: flex;
+        flex-wrap: wrap;
+
+        .field {
+            flex: 1 0 40%;
+
+            &:not(:last-child) {
+                margin-right: 20px;
+            }
+        }
+    }
+}

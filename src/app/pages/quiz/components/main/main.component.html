@@ -1,0 +1,18 @@
+<div class="wrapper">
+    <button mat-flat-button color="primary" (click)="newExpert()">Новий експерт</button>
+
+    <div class="results">
+        <h2>РЕЗУЛЬТАТИ КОЛЕКТИВНОЇ ЕКСПЕРТИЗИ {{ name }}</h2>
+        
+        
+        <div class="res-1">
+            <span *ngFor="let alt of alternatives"> {{alt}} </span>
+            <div class="vote" *ngFor="let vote of votes">  
+                <span class="name">{{vote.name}}</span>
+                <div class="votes">
+                    <span *ngFor="let mark of vote.votes">{{mark}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
