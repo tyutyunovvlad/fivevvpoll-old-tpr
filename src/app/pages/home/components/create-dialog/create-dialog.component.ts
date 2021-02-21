@@ -25,6 +25,7 @@ export class CreateDialogComponent implements AfterViewInit {
   constructor(private mainService: MainService, public dialog: MatDialog) {
     this.form = new FormGroup({
       name: new FormControl('', Validators.required),
+      id: new FormControl('', [Validators.required, Validators.minLength(5)]),
       count: new FormControl('2', Validators.required),
     });
 
@@ -38,8 +39,10 @@ export class CreateDialogComponent implements AfterViewInit {
     this.data = {
       name: this.form.value.name,
       count: this.form.value.count,
+      id: this.form.value.id,
       type: this.selectedMetric,
-      alternatives: []
+      alternatives: [],
+      votes: []
     };
 
 

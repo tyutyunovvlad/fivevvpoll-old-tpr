@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 export interface IData {
   name: string;
+  id: string;
   count: number;
   type: number;
   alternatives: Array<string>;
+  votes?: Array<IVote>;
 }
 
 export interface IVote {
@@ -34,12 +37,27 @@ export class MainService {
 
   public votingName = '';
 
-  constructor(private router: Router) { }
+  private ref = this.firestore.collection('interviews');
+
+  constructor(private router: Router, private firestore: AngularFirestore) {
+    this.ref.valueChanges().subscribe(res => {
+      console.log(res);
+    });
+
+    this.votes$.subscribe(res => {
+      if (res.length && this.optionsSubj.value) {
+
+        this.ref.doc(this.optionsSubj.value?.id).update({ votes: res });
+      }
+    });
+  }
 
   public create(data: IData): void {
     this.router.navigate(['/quiz']);
     this.optionsSubj.next(data);
-    console.log(data);
+    this.ref.doc(data.id).set(data);
+
+    localStorage.setItem('id', data.id);
   }
 
   public addVote(vote: IVote): void {
@@ -47,12 +65,34 @@ export class MainService {
     const votes = this.votesSubj.value;
     votes.push(vote);
     this.votesSubj.next(votes);
-    console.log(vote, votes);
-    
+    this.ref.doc(this.optionsSubj.value.id).update({
+      votes
+    });
   }
 
   public startVoting(name: string): void {
     this.votingName = name.trim();
     this.router.navigate(['/quiz/voting']);
+  }
+
+  public findById(id: string): void {
+
+    this.ref.get().subscribe(res => {
+
+      let data: any = res.docs.map(doc => doc.data());
+      let coll = data.find(el => el.id === id);
+      if (coll) {
+        console.log(coll);
+        this.votesSubj.next(coll.votes);
+        this.optionsSubj.next(coll);
+      }
+    });
+  }
+
+
+  public clearAll(): void {
+    this.votesSubj.next([]);
+    this.optionsSubj.next(null);
+    localStorage.removeItem('id');
   }
 }

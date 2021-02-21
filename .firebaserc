@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "tpr-quiz": {
+      "hosting": {
+        "tpr": [
+          "tpr-quiz"
+        ]
+      }
+    }
+  }
+}

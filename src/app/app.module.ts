@@ -11,13 +11,23 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialogModule } from '@angular/material/dialog';
-import {MatInputModule} from '@angular/material/input';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { CreateDialogComponent } from './pages/home/components/create-dialog/create-dialog.component';
 import { ConnectDialogComponent } from './pages/home/components/connect-dialog/connect-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AngularFireModule } from '@angular/fire';
 
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyCvD4cQ6tVfuU0uihhgxniUC-DCMFQBfIs',
+  authDomain: 'tpr-quiz.firebaseapp.com',
+  projectId: 'tpr-quiz',
+  storageBucket: 'tpr-quiz.appspot.com',
+  messagingSenderId: '284856723267',
+  appId: '1:284856723267:web:459c997606649b777db1f6'
+};
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +43,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    AngularFireModule.initializeApp(firebaseConfig),
 
     MatButtonModule,
     MatToolbarModule,

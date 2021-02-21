@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MainService } from 'src/app/shared/services/main.service';
 import { ConnectDialogComponent } from './components/connect-dialog/connect-dialog.component';
 import { CreateDialogComponent } from './components/create-dialog/create-dialog.component';
 
@@ -10,9 +11,10 @@ import { CreateDialogComponent } from './components/create-dialog/create-dialog.
 })
 export class HomeComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private mainService: MainService) { }
 
   ngOnInit(): void {
+    this.mainService.clearAll();
   }
 
   public create(): void {

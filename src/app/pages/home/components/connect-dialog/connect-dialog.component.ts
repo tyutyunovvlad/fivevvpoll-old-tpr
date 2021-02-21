@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { MainService } from 'src/app/shared/services/main.service';
 
 @Component({
   selector: 'app-connect-dialog',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConnectDialogComponent implements OnInit {
 
-  constructor() { }
+  id: string;
 
-  ngOnInit(): void {
+  constructor(private mainService: MainService, private router: Router, private dialog: MatDialog) { }
+
+  ngOnInit(): void { }
+
+  public connect(): void {
+    this.mainService.findById(this.id);
+    this.dialog.closeAll();
+    this.router.navigate(['quiz']);
   }
 
 }

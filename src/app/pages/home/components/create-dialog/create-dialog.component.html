@@ -9,6 +9,11 @@
     </mat-form-field> 
 
     <mat-form-field class="field">
+        <mat-label>Код доступу (мінімум 5)</mat-label>
+        <input formControlName="id" matInput type="text" autocomplete="off">
+    </mat-form-field> 
+
+    <mat-form-field class="field">
         <mat-label>Кількість альтернатив (1-10)</mat-label>
         <input formControlName="count" matInput type="number" autocomplete="off" min="1" max="10">
     </mat-form-field> 
