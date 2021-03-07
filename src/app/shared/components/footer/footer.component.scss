@@ -1,3 +1,10 @@
+:host {
+    position: relative;
+    bottom: 0;
+    width: 100vw;
+    z-index: 2;
+}
+
 .wrapper {
     mat-toolbar {
         background-color: #082f54;
