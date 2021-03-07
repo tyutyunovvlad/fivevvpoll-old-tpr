@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { ErrorService } from 'src/app/shared/services/error.service';
 import { IData, MainService } from 'src/app/shared/services/main.service';
 
 
@@ -22,7 +23,7 @@ export class CreateDialogComponent implements AfterViewInit {
     ['5', '4', '3', '2', '1']
   ];
 
-  constructor(private mainService: MainService, public dialog: MatDialog) {
+  constructor(private mainService: MainService, public dialog: MatDialog, private errorService: ErrorService) {
     this.form = new FormGroup({
       name: new FormControl('', Validators.required),
       id: new FormControl('', [Validators.required, Validators.minLength(5)]),
@@ -36,21 +37,29 @@ export class CreateDialogComponent implements AfterViewInit {
   }
 
   public onSubmit(): void {
-    this.data = {
-      name: this.form.value.name,
-      count: this.form.value.count,
-      id: this.form.value.id,
-      type: this.selectedMetric,
-      alternatives: [],
-      votes: []
-    };
 
+    this.mainService.checkIfExist(this.form.value.id.trim()).subscribe(exist => {
+      if (!exist) {
+        this.data = {
+          name: this.form.value.name.trim(),
+          count: this.form.value.count,
+          id: this.form.value.id.trim(),
+          type: this.selectedMetric,
+          alternatives: [],
+          votes: []
+        };
 
-    this.alternativesForm = new FormGroup({});
-    for (let i = 0; i < this.data.count; i++) {
-      this.alternativesForm.addControl(`${i}`, new FormControl(`Альтернатива ${i + 1}`, Validators.required));
-      this.data.alternatives.push('');
-    }
+        this.alternativesForm = new FormGroup({});
+        for (let i = 0; i < this.data.count; i++) {
+          this.alternativesForm.addControl(`${i}`, new FormControl(`Альтернатива ${i + 1}`, Validators.required));
+          this.data.alternatives.push('');
+        }
+      } else {
+        this.errorService.showCreateError();
+      }
+    });
+
+    
   }
 
   public onSubmitAlternatives(): void {

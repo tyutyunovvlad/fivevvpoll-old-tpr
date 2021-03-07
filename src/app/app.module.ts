@@ -18,6 +18,9 @@ import { CreateDialogComponent } from './pages/home/components/create-dialog/cre
 import { ConnectDialogComponent } from './pages/home/components/connect-dialog/connect-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { ConnectErrorComponent } from './pages/home/components/connect-error/connect-error.component';
+import { CreateErrorComponent } from './pages/home/components/create-error/create-error.component';
 
 
 const firebaseConfig = {
@@ -36,6 +39,8 @@ const firebaseConfig = {
     FooterComponent,
     CreateDialogComponent,
     ConnectDialogComponent,
+    ConnectErrorComponent,
+    CreateErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +55,8 @@ const firebaseConfig = {
     MatDialogModule,
     MatInputModule,
     MatIconModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

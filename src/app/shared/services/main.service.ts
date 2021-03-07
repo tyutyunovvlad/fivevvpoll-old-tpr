@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
-import { filter, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { filter, map, tap } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorService } from './error.service';
 
 export interface IData {
   name: string;
@@ -32,19 +34,24 @@ export class MainService {
   private votesSubj = new BehaviorSubject<Array<IVote>>([]);
   public votes$ = this.votesSubj.asObservable().pipe(filter(r => !!r));
 
-  private optionsSubj = new BehaviorSubject<IData>(null);
+  private optionsSubj = new BehaviorSubject<IData | 'empty'>(undefined);
   public options$ = this.optionsSubj.asObservable().pipe(filter(r => !!r));
 
   public votingName = '';
 
   private ref = this.firestore.collection('interviews');
 
-  constructor(private router: Router, private firestore: AngularFirestore) {
+  constructor(
+    private router: Router,
+    private firestore: AngularFirestore,
+    private dialog: MatDialog,
+    private errorService: ErrorService
+  ) {
     this.ref.valueChanges().subscribe(res => {
     });
 
     this.votes$.subscribe(res => {
-      if (res.length && this.optionsSubj.value) {
+      if (res.length && this.optionsSubj.value !== 'empty' && this.optionsSubj.value?.id) {
 
         this.ref.doc(this.optionsSubj.value?.id).update({ votes: res });
       }
@@ -61,13 +68,16 @@ export class MainService {
   }
 
   public addVote(vote: IVote): void {
+
     this.router.navigate(['/quiz']);
     const votes = this.votesSubj.value;
     votes.push(vote);
     this.votesSubj.next(votes);
-    this.ref.doc(this.optionsSubj.value.id).update({
-      votes
-    });
+    if (this.optionsSubj.value !== 'empty') {
+      this.ref.doc(this.optionsSubj.value.id).update({
+        votes
+      });
+    }
   }
 
   public startVoting(name: string): void {
@@ -75,17 +85,38 @@ export class MainService {
     this.router.navigate(['/quiz/voting']);
   }
 
-  public findById(id: string): void {
+  public findById(id: string, callback?): void {
+
 
     this.ref.get().subscribe(res => {
 
       let data: any = res.docs.map(doc => doc.data());
       let coll = data.find(el => el.id === id);
+
       if (coll) {
+
         this.votesSubj.next(coll.votes);
         this.optionsSubj.next(coll);
+        this.router.navigate(['quiz']);
+        localStorage.setItem('id', id);
+        this.dialog.closeAll();
+
+      } else if (callback) {
+        this.optionsSubj.next('empty');
+        callback();
       }
     });
+  }
+
+  public checkIfExist(id: string): Observable<boolean> {
+    return this.ref.get().pipe(map( res => {
+      let data: any = res.docs.map(doc => doc.data());
+      let coll = data.find(el => el.id === id);
+      if (coll) {
+        return true;
+      }
+      return false;
+    }));
   }
 
 

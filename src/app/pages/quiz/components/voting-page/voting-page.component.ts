@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { IVote, MainService } from 'src/app/shared/services/main.service';
+import { ErrorService } from 'src/app/shared/services/error.service';
+import { IVote, IData, MainService } from 'src/app/shared/services/main.service';
+import { RouterErrorComponent } from '../router-error/router-error.component';
 
 @Component({
   selector: 'app-voting-page',
@@ -16,20 +19,39 @@ export class VotingPageComponent implements OnInit {
 
   public marks = [];
 
-  constructor(private mainService: MainService, private router: Router) {
+  constructor(
+    private mainService: MainService,
+    private router: Router,
+    private errorService: ErrorService
+  ) {
     this.mainService.options$.subscribe(res => {
-      this.name = res.name;
-      this.expertName = this.mainService.votingName;
-      this.metric = this.mainService.metrics[res.type];
-      this.alternatives = res.alternatives;
+      if (res !== 'empty') {
+        this.name = res.name;
+        this.expertName = this.mainService.votingName;
+        this.metric = this.mainService.metrics[res.type];
+        this.alternatives = res.alternatives;
 
-      for (let i = 0; i < res.count; i++) {
-        this.marks.push(2);
+        for (let i = 0; i < res.count; i++) {
+          this.marks.push(2);
+        }
+      } else {
+        this.errorService.showRouteError();
+
+        this.router.navigate(['home']);
+        
       }
     });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    setTimeout(() => {
+      if (!this.name) {
+        this.errorService.showRouteError();
+        this.router.navigate(['home']);
+      }
+    }, 300);
+  }
+
 
   public send(): void {
     const res: IVote = {

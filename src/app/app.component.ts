@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MainService } from './shared/services/main.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { MainService } from './shared/services/main.service';
 export class AppComponent implements OnInit {
   title = 'tpr';
 
-  constructor(private mainService: MainService) {
+  constructor(private mainService: MainService, private router: Router) {
 
   }
 
