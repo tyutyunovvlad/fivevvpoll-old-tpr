@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div class="wrapper" [class]="markType">
     <button mat-raised-button class="new" (click)="newExpert()">Новий експерт</button>
 
     <div class="results" *ngIf="votes.length">

@@ -22,7 +22,7 @@
         Тип оцінювання:
         <mat-button-toggle-group [(ngModel)]="selectedMetric" name="fontStyle" aria-label="Font Style" [ngModelOptions]="{standalone: true}">
             <mat-button-toggle class="variant" *ngFor="let type of metrics; let i = index" [value]="i">
-                <span *ngFor="let el of type">{{el}}</span>
+                <span *ngFor="let el of type.values">{{el}}</span>
             </mat-button-toggle>
             
         </mat-button-toggle-group>

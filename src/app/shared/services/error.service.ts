@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ConnectErrorComponent } from 'src/app/pages/home/components/connect-error/connect-error.component';
-import { CreateErrorComponent } from 'src/app/pages/home/components/create-error/create-error.component';
-import { RouterErrorComponent } from 'src/app/pages/quiz/components/router-error/router-error.component';
+import { ConnectErrorComponent } from 'src/app/shared/errors/connect-error/connect-error.component';
+import { CreateErrorComponent } from 'src/app/shared/errors/create-error/create-error.component';
+import { RouterErrorComponent } from 'src/app/shared/errors/router-error/router-error.component';
 
 @Injectable({
   providedIn: 'root'

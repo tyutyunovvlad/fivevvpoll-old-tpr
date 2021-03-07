@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ErrorService } from 'src/app/shared/services/error.service';
 import { IVote, IData, MainService } from 'src/app/shared/services/main.service';
-import { RouterErrorComponent } from '../router-error/router-error.component';
+import { RouterErrorComponent } from '../../../../shared/errors/router-error/router-error.component';
 
 @Component({
   selector: 'app-voting-page',
@@ -28,7 +28,7 @@ export class VotingPageComponent implements OnInit {
       if (res !== 'empty') {
         this.name = res.name;
         this.expertName = this.mainService.votingName;
-        this.metric = this.mainService.metrics[res.type];
+        this.metric = this.mainService.metrics[res.type].values;
         this.alternatives = res.alternatives;
 
         for (let i = 0; i < res.count; i++) {

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { ErrorService } from 'src/app/shared/services/error.service';
 import { IVote, MainService } from 'src/app/shared/services/main.service';
 import { NewExpertComponent } from '../new-expert/new-expert.component';
-import { RouterErrorComponent } from '../router-error/router-error.component';
+import { RouterErrorComponent } from '../../../../shared/errors/router-error/router-error.component';
 
 @Component({
   selector: 'app-main',
@@ -17,6 +17,7 @@ export class MainComponent implements OnInit {
   public name: string;
   public votes: Array<IVote>;
   public alternatives: Array<string>;
+  public markType: string;
 
   constructor(
     private dialog: MatDialog,
@@ -31,6 +32,10 @@ export class MainComponent implements OnInit {
       if (res !== 'empty') {
         this.name = res.name;
         this.alternatives = res.alternatives;
+        this.markType = this.mainService.metrics[res.type].type;
+        console.log(this.markType);
+        
+        
       } else {
         this.errorService.showRouteError();
         this.router.navigate(['home']);

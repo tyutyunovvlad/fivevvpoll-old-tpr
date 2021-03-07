@@ -34,24 +34,68 @@
                 margin-right: 5px;
             }
 
-            .mark {
-                border-radius: 5px;
-                &[mark="0"] {
-                    background: #ff0000;
-                } 
-                &[mark="1"] {
-                    background: #FF8270;
-                } 
-                &[mark="2"] {
-                    background: #FFFF2A;
-                } 
-                &[mark="3"] {
-                    background: #80FE5C;
-                } 
-                &[mark="4"] {
-                    background: #00d700;
-                } 
-            }
+            
+        }
+    }
+}
+
+.wrapper {
+    &.centered {
+        .mark {
+            border-radius: 5px;
+            &[mark="0"] {
+                background: #ff0000;
+            } 
+            &[mark="1"] {
+                background: #FF8270;
+            } 
+            &[mark="2"] {
+                background: #FFFF2A;
+            } 
+            &[mark="3"] {
+                background: #80FE5C;
+            } 
+            &[mark="4"] {
+                background: #00d700;
+            } 
+        }
+    }
+
+    &.ladder {
+        .mark {
+            // border-radius: 5px;
+            // &[mark="0"] {
+            //     background: #e6e6e6;
+            // } 
+            // &[mark="1"] {
+            //     background: rgb(197, 191, 255);
+            // } 
+            // &[mark="2"] {
+            //     background: rgb(137, 124, 255);
+            // } 
+            // &[mark="3"] {
+            //     background: rgb(90, 72, 255);
+            // } 
+            // &[mark="4"] {
+            //     background: rgb(21, 0, 211);
+            // } 
+
+            border-radius: 5px;
+            &[mark="0"] {
+                background: #f6fff5;
+            } 
+            &[mark="1"] {
+                background: rgb(189, 255, 192);
+            } 
+            &[mark="2"] {
+                background: rgb(105, 255, 125);
+            } 
+            &[mark="3"] {
+                background: rgb(76, 248, 70);
+            } 
+            &[mark="4"] {
+                background: rgb(7, 187, 1);
+            } 
         }
     }
 }

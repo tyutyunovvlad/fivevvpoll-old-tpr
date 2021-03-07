@@ -26,9 +26,18 @@ export interface IVote {
 export class MainService {
 
   public metrics = [
-    ['Дуже погано', 'Погано', 'Байдуже', 'Добре', 'Дуже добре'],
-    ['Категорично проти', 'Проти', 'Байдуже', 'За', 'Категорично за'],
-    ['1', '2', '3', '4', '5']
+    {
+      type: 'centered',
+      values: ['Дуже погано', 'Погано', 'Байдуже', 'Добре', 'Дуже добре'],
+    },
+    {
+      type: 'centered',
+      values: ['Категорично проти', 'Проти', 'Байдуже', 'За', 'Категорично за'],
+    },
+    {
+      type: 'ladder',
+      values: ['1', '2', '3', '4', '5']
+    }
   ];
 
   private votesSubj = new BehaviorSubject<Array<IVote>>([]);

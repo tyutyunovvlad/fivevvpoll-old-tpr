@@ -19,8 +19,8 @@ import { ConnectDialogComponent } from './pages/home/components/connect-dialog/c
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { ConnectErrorComponent } from './pages/home/components/connect-error/connect-error.component';
-import { CreateErrorComponent } from './pages/home/components/create-error/create-error.component';
+import { ConnectErrorComponent } from './shared/errors/connect-error/connect-error.component';
+import { CreateErrorComponent } from './shared/errors/create-error/create-error.component';
 
 
 const firebaseConfig = {

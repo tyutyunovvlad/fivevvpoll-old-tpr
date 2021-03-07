@@ -17,13 +17,12 @@ export class CreateDialogComponent implements AfterViewInit {
   public data: IData | undefined;
 
   public selectedMetric = 0;
-  public metrics = [
-    ['Дуже добре', 'Добре', 'Байдуже', 'Погано', 'Дуже погано'],
-    ['Категорично за', 'За', 'Байдуже', 'Проти', 'Категорично проти'],
-    ['5', '4', '3', '2', '1']
-  ];
+  public metrics = [];
 
   constructor(private mainService: MainService, public dialog: MatDialog, private errorService: ErrorService) {
+    this.metrics = this.mainService.metrics;
+    console.log(this.metrics);
+    
     this.form = new FormGroup({
       name: new FormControl('', Validators.required),
       id: new FormControl('', [Validators.required, Validators.minLength(5)]),

@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { MainService } from 'src/app/shared/services/main.service';
-import { ConnectErrorComponent } from '../connect-error/connect-error.component';
+import { ConnectErrorComponent } from '../../../../shared/errors/connect-error/connect-error.component';
 
 @Component({
   selector: 'app-connect-dialog',
