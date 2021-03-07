@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { IVote, MainService } from 'src/app/shared/services/main.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class VotingPageComponent implements OnInit {
 
   public marks = [];
 
-  constructor(private mainService: MainService) {
+  constructor(private mainService: MainService, private router: Router) {
     this.mainService.options$.subscribe(res => {
       this.name = res.name;
       this.expertName = this.mainService.votingName;
@@ -38,4 +39,7 @@ export class VotingPageComponent implements OnInit {
     this.mainService.addVote(res);
   }
 
+  public back(): void {
+    this.router.navigate(['quiz']);
+  }
 }

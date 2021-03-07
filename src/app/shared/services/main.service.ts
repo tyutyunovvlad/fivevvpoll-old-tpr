@@ -41,7 +41,6 @@ export class MainService {
 
   constructor(private router: Router, private firestore: AngularFirestore) {
     this.ref.valueChanges().subscribe(res => {
-      console.log(res);
     });
 
     this.votes$.subscribe(res => {
@@ -58,6 +57,7 @@ export class MainService {
     this.ref.doc(data.id).set(data);
 
     localStorage.setItem('id', data.id);
+    this.findById(data.id);
   }
 
   public addVote(vote: IVote): void {
@@ -82,7 +82,6 @@ export class MainService {
       let data: any = res.docs.map(doc => doc.data());
       let coll = data.find(el => el.id === id);
       if (coll) {
-        console.log(coll);
         this.votesSubj.next(coll.votes);
         this.optionsSubj.next(coll);
       }

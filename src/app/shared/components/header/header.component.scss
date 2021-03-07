@@ -3,5 +3,13 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        background-color: #082f54;
+
+        button {
+            color: whitesmoke;
+            position: absolute;
+            right: 20px;
+        }
+
     }
 }

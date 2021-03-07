@@ -3,12 +3,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
+    background: rgb(108,198,209);
+    background: linear-gradient(90deg, rgba(108,198,209,1) 35%, rgba(173,228,233,1) 100%);
     height: calc(100vh - 64px - 64px);
 
     .title {
-        font-weight: 500;
-        color: rgb(37, 35, 41);
+        font-weight: 700;
+        font-size: 36px;
+        color: white;
     }
 
     .toolbar {
@@ -18,6 +20,17 @@
 
         button:not(:last-child) {
             margin-right: 20px;
+        }
+
+        button {
+            &.first {
+                background: #ff7c20;
+                color: white;
+            }
+            &.second {
+                background: #23ff5d;
+                color: white;
+            }
         }
     }
 }

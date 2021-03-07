@@ -1,6 +1,8 @@
 <div class="wrapper">
-    <span>{{name}}</span> <br>
-    <span>експерт {{expertName}}</span>
+    <!-- <span>{{name}}</span> <br> -->
+    <span class="name">Eксперт {{expertName}}</span> <br>
+    <button mat-raised-button color="primary" (click)="send()">Підтвердити</button>
+    <button mat-raised-button color="warn" (click)="back()">Повернутися</button>
 
     <div class="questions">
         <p *ngFor="let alt of alternatives; let i = index">
@@ -14,5 +16,4 @@
         </p>
     </div>
 
-    <button mat-button color="primary" (click)="send()">Підтвердити</button>
 </div>

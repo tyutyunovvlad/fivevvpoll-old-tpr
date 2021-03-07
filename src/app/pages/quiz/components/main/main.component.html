@@ -1,18 +1,29 @@
 <div class="wrapper">
-    <button mat-flat-button color="primary" (click)="newExpert()">Новий експерт</button>
+    <button mat-raised-button class="new" (click)="newExpert()">Новий експерт</button>
 
-    <div class="results">
+    <div class="results" *ngIf="votes.length">
         <h2>РЕЗУЛЬТАТИ КОЛЕКТИВНОЇ ЕКСПЕРТИЗИ {{ name }}</h2>
         
         
         <div class="res-1">
-            <span *ngFor="let alt of alternatives"> {{alt}} </span>
+            <div class="head">
+                <span class="empty"></span>
+                <span class="alt" *ngFor="let alt of alternatives"> {{alt}} </span>
+            </div>
             <div class="vote" *ngFor="let vote of votes">  
                 <span class="name">{{vote.name}}</span>
-                <div class="votes">
-                    <span *ngFor="let mark of vote.votes">{{mark}}</span>
-                </div>
+                <span class="mark" *ngFor="let mark of vote.votes" [attr.mark]="mark"></span>
             </div>
+            <!-- <table>
+                <thead>
+                    <td class="empty"></td>
+                    <td class="alt" *ngFor="let alt of alternatives"> {{alt}} </td>
+                </thead>
+                <tr class="vote" *ngFor="let vote of votes">
+                    <td class="name">{{vote.name}}</td>
+                    <td class="mark" *ngFor="let mark of vote.votes">{{mark}}</td>
+                </tr>
+            </table> -->
         </div>
     </div>
 </div>
