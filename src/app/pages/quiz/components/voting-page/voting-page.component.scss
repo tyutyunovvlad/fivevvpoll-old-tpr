@@ -30,6 +30,7 @@
             ::ng-deep .mat-button-toggle {
                 display: flex;
                 width: 140px;
+                min-height: 35px;
 
                 .mat-button-toggle-label-content {
                     line-height: unset;
