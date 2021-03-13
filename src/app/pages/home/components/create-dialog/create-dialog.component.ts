@@ -26,7 +26,7 @@ export class CreateDialogComponent implements AfterViewInit {
     this.form = new FormGroup({
       name: new FormControl('', Validators.required),
       id: new FormControl('', [Validators.required, Validators.minLength(5)]),
-      count: new FormControl('2', Validators.required),
+      count: new FormControl('2', [Validators.required, Validators.max(10), Validators.min(1)]),
     });
 
   }
@@ -71,4 +71,8 @@ export class CreateDialogComponent implements AfterViewInit {
     this.dialog.closeAll();
   }
 
+
+  public close() {
+    this.dialog.closeAll();
+  }
 }

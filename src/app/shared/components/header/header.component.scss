@@ -10,6 +10,15 @@
         justify-content: center;
         background-color: #082f54;
         position: relative;
+
+        .logo {
+            background-image: url('/assets/logo.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+            width: 175px;
+            height: 100%;
+        }
         button {
             color: whitesmoke;
             position: absolute;

@@ -9,8 +9,9 @@
 
     .title {
         font-weight: 700;
-        font-size: 36px;
+        font-size: 3rem;
         color: white;
+        text-align: center;
     }
 
     .toolbar {
@@ -19,11 +20,11 @@
         justify-content: center;
 
         button:not(:last-child) {
-            margin-right: 20px;
+            margin-right: 1rem;
         }
 
         button {
-            border-radius: 20px;
+            border-radius: 2rem;
             &.first {
                 background: #ff7c20;
                 color: white;
@@ -32,6 +33,28 @@
                 background: #15ae8a;
                 color: white;
             }
+        }
+    }
+}
+
+
+@media screen and (max-width: 599px) {
+    .wrapper {
+        height: calc(100vh - 56px - 56px);
+
+        .title {
+            font-size: 2rem;
+        }
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .toolbar {
+        flex-direction: column;
+
+        button {
+            margin-right: 0 !important;
+            margin-bottom: 1rem;
         }
     }
 }
