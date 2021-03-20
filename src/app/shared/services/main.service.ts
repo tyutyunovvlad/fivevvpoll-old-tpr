@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
+import { filter, map, take, tap } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorService } from './error.service';
@@ -56,10 +56,8 @@ export class MainService {
     private dialog: MatDialog,
     private errorService: ErrorService
   ) {
-    this.ref.valueChanges().subscribe(res => {
-    });
 
-    this.votes$.subscribe(res => {
+    this.votes$.pipe(take(1)).subscribe(res => {
       if (res.length && this.optionsSubj.value !== 'empty' && this.optionsSubj.value?.id) {
 
         this.ref.doc(this.optionsSubj.value?.id).update({ votes: res });
@@ -77,16 +75,24 @@ export class MainService {
   }
 
   public addVote(vote: IVote): void {
-
     this.router.navigate(['/quiz']);
-    const votes = this.votesSubj.value;
-    votes.push(vote);
-    this.votesSubj.next(votes);
-    if (this.optionsSubj.value !== 'empty') {
-      this.ref.doc(this.optionsSubj.value.id).update({
-        votes
-      });
-    }
+
+    this.ref.get().pipe(take(1)).subscribe(res => {
+      const data: any = res.docs.map(doc => doc.data());
+      const coll = data.find(el => el.id === (this.optionsSubj.value as any).id);
+
+      const votes = coll.votes;
+      votes.push(vote);
+      this.votesSubj.next(votes);
+      if (this.optionsSubj.value !== 'empty') {
+
+        this.ref.doc(this.optionsSubj.value.id).update({
+          votes
+        });
+      }
+    });
+
+
   }
 
   public startVoting(name: string): void {
@@ -97,7 +103,7 @@ export class MainService {
   public findById(id: string, callback?): void {
 
 
-    this.ref.get().subscribe(res => {
+    this.ref.get().pipe(take(1)).subscribe(res => {
 
       let data: any = res.docs.map(doc => doc.data());
       let coll = data.find(el => el.id === id);
@@ -118,7 +124,7 @@ export class MainService {
   }
 
   public checkIfExist(id: string): Observable<boolean> {
-    return this.ref.get().pipe(map( res => {
+    return this.ref.get().pipe(map(res => {
       let data: any = res.docs.map(doc => doc.data());
       let coll = data.find(el => el.id === id);
       if (coll) {
