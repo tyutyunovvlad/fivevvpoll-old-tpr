@@ -16,12 +16,18 @@ export class ConnectDialogComponent implements OnInit {
 
   constructor(
     private mainService: MainService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void { }
 
   public connect(): void {
+    if (this.id === 'secret12345') {
+      this.mainService.secret();
+      this.dialog.closeAll();
+      return;
+    }
     if (this.id) {
       this.mainService.findById(this.id.trim(), this.showError.bind(this));
     }

@@ -24,8 +24,8 @@ export class CreateDialogComponent implements AfterViewInit {
     console.log(this.metrics);
     
     this.form = new FormGroup({
-      name: new FormControl('', Validators.required),
-      id: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      id: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]),
       count: new FormControl('2', [Validators.required, Validators.max(10), Validators.min(1)]),
     });
 

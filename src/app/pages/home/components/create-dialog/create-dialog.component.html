@@ -8,7 +8,7 @@
     </mat-form-field> 
 
     <mat-form-field class="field">
-        <mat-label>Код доступу (мінімум 5)</mat-label>
+        <mat-label>Код доступу (5-20)</mat-label>
         <input formControlName="id" matInput type="text" autocomplete="off">
     </mat-form-field> 
 
@@ -17,7 +17,7 @@
         <input formControlName="count" matInput type="number" autocomplete="off" min="1" max="10">
     </mat-form-field> 
     <p class="metrics-select">
-        Тип оцінювання:
+        Тип шкали оцінювання:
         <mat-button-toggle-group [(ngModel)]="selectedMetric" name="fontStyle" aria-label="Font Style" [ngModelOptions]="{standalone: true}">
             <mat-button-toggle class="variant" *ngFor="let type of metrics; let i = index" [value]="i">
                 <span *ngFor="let el of type.values">{{el}}</span>
@@ -34,7 +34,7 @@
 
 
 <form class="alternatives" [formGroup]="alternativesForm" *ngIf="alternativesForm" (ngSubmit)="onSubmitAlternatives()">
-    <h3>Введіть альтернативи</h3>
+    <h3>Введіть назви альтернатив</h3>
     <div class="inputs">
         <mat-form-field class="field" *ngFor="let alt of data?.alternatives; let i = index">
             <mat-label>Альтернатива {{i+1}}</mat-label>

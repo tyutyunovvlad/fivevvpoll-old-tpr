@@ -19,6 +19,8 @@ export class MainComponent implements OnInit {
   public alternatives: Array<string>;
   public markType: string;
 
+  public bars = [];
+
   constructor(
     private dialog: MatDialog,
     private mainService: MainService,
@@ -43,10 +45,23 @@ export class MainComponent implements OnInit {
     });
     this.mainService.votes$.subscribe(res => {
       this.votes = res;
+
+      this.alternatives.forEach((alt, i) => {
+        this.bars.push({i, marks: []});
+        console.log(this.bars);
+        
+        this.votes.forEach((vote, j) => {
+          this.bars[i].marks.push(vote.votes[i]);
+        });
+        this.bars[i].marks.sort();
+        
+      });
     });
   }
 
   ngOnInit(): void {
+    
+
     setTimeout(() => {
       if (!this.name) {
         this.errorService.showRouteError();
@@ -57,6 +72,10 @@ export class MainComponent implements OnInit {
 
   public newExpert(): void {
     this.dialog.open(NewExpertComponent);
+  }
+
+  public getNumberOfMarks(marks, i) {
+   return marks.filter(mark => mark === i).length;
   }
 
 }

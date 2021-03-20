@@ -18,6 +18,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        width: 480px;
 
         button:not(:last-child) {
             margin-right: 1rem;
@@ -25,6 +26,7 @@
 
         button {
             border-radius: 2rem;
+            width: 100%;
             &.first {
                 background: #ff7c20;
                 color: white;
@@ -32,6 +34,10 @@
             &.second {
                 background: #15ae8a;
                 color: white;
+            }
+
+            &:disabled {
+                background: #ff7d2080;
             }
         }
     }
@@ -44,6 +50,16 @@
 
         .title {
             font-size: 2rem;
+        }
+
+        .toolbar {
+            flex-direction: column;
+            width: 275px;
+    
+            button {
+                margin-right: 0 !important;
+                margin-bottom: 1rem;
+            }
         }
     }
 }

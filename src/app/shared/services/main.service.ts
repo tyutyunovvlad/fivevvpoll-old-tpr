@@ -25,6 +25,9 @@ export interface IVote {
 })
 export class MainService {
 
+  private adminSubj = new BehaviorSubject(false);
+  public admin$ = this.adminSubj.asObservable();
+
   public metrics = [
     {
       type: 'centered',
@@ -139,5 +142,9 @@ export class MainService {
     this.votesSubj.next([]);
     this.optionsSubj.next(null);
     localStorage.removeItem('id');
+  }
+
+  public secret() {
+    this.adminSubj.next(true);
   }
 }

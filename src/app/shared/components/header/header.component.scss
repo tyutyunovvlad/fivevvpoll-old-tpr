@@ -11,6 +11,11 @@
         background-color: #082f54;
         position: relative;
 
+        h1 {
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
         .logo {
             background-image: url('/assets/logo.png');
             background-repeat: no-repeat;

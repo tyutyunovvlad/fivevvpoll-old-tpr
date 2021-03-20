@@ -20,6 +20,7 @@
         .head {
             display: flex;
             & > * {
+                font-style: italic;
                 width: calc(100vw / 12);
                 max-width: 110px;
                 text-overflow: ellipsis;
@@ -38,6 +39,29 @@
                 overflow: hidden;
                 white-space: nowrap;
                 margin-right: 5px;
+            }
+        }
+    }
+
+    .res-2 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .title {
+            font-style: italic;
+        }
+        .bar {
+            width: 500px;
+            height: 50px;
+            display: flex;
+
+            .mark {
+                min-width: 0px;
+                border-radius: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
         }
     }
@@ -78,6 +102,16 @@
                 }
             }
         }
+
+        .res-2 {
+            .alt {
+                width: 100%;
+                .bar {
+                    width: 100%;
+                }
+            }
+            
+        }
     }
 }
 
@@ -89,16 +123,16 @@
                 background: #ff0000;
             }
             &[mark="1"] {
-                background: #ffb070;
+                background: #ffb9b9;
             }
             &[mark="2"] {
-                background: #ffff2a;
+                background: #ffff00;
             }
             &[mark="3"] {
-                background: #5cfe8d;
+                background: #b6df89;
             }
             &[mark="4"] {
-                background: #00d700;
+                background: #00b050;
             }
         }
     }
@@ -107,19 +141,19 @@
         .mark {
             border-radius: 5px;
             &[mark="0"] {
-                background: #b5e0ff;
+                background: #e7f0f9;
             }
             &[mark="1"] {
-                background: #6cc2ff;
+                background: #bfd6ef;
             }
             &[mark="2"] {
-                background: #1987bb;
+                background: #80adde;
             }
             &[mark="3"] {
-                background: #2a19bb;
+                background: #3175bf;
             }
             &[mark="4"] {
-                background: #0a0158;
+                background: #25578f;
             }
         }
     }
