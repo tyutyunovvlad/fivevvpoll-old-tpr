@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +21,11 @@ import { AngularFireModule } from '@angular/fire';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { ConnectErrorComponent } from './shared/errors/connect-error/connect-error.component';
 import { CreateErrorComponent } from './shared/errors/create-error/create-error.component';
+
+import { registerLocaleData } from '@angular/common';
+import localeUa from '@angular/common/locales/uk';
+
+registerLocaleData(localeUa, 'ua');
 
 
 const firebaseConfig = {
@@ -58,7 +63,7 @@ const firebaseConfig = {
     MatButtonToggleModule,
     MatSnackBarModule
   ],
-  providers: [],
+  providers: [{provide: LOCALE_ID, useValue: 'ua'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

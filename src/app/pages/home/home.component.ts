@@ -11,11 +11,11 @@ import { CreateDialogComponent } from './components/create-dialog/create-dialog.
 })
 export class HomeComponent implements OnInit {
 
-  disabled = false;
+  disabled = true;
 
   constructor(public dialog: MatDialog, private mainService: MainService) {
     this.mainService.admin$.subscribe(admin => {
-      // this.disabled = !admin;
+      this.disabled = !admin;
     }) ;
   }
 

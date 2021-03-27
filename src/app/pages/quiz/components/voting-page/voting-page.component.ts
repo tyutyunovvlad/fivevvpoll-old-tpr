@@ -38,7 +38,6 @@ export class VotingPageComponent implements OnInit {
         this.errorService.showRouteError();
 
         this.router.navigate(['home']);
-        
       }
     });
   }
@@ -56,7 +55,8 @@ export class VotingPageComponent implements OnInit {
   public send(): void {
     const res: IVote = {
       name: this.expertName,
-      votes: this.marks
+      votes: this.marks,
+      time: new Date().toString()
     };
     this.mainService.addVote(res);
   }

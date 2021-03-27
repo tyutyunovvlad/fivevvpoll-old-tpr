@@ -18,6 +18,9 @@ export class MainComponent implements OnInit {
   public votes: Array<IVote>;
   public alternatives: Array<string>;
   public markType: string;
+  public code: string;
+
+  public times = [];
 
   public bars = [];
 
@@ -35,32 +38,34 @@ export class MainComponent implements OnInit {
         this.name = res.name;
         this.alternatives = res.alternatives;
         this.markType = this.mainService.metrics[res.type].type;
-        console.log(this.markType);
-        
-        
+        this.code = res.id;
+
+        this.mainService.votes$.subscribe(res => {
+          this.bars = [];
+          
+          this.votes = res;
+          this.times[0] = res[0]?.time;
+          this.times[1] = res[res.length - 1]?.time;
+          this.alternatives.forEach((alt, i) => {
+            this.bars.push({ i, marks: [] });
+
+            this.votes.forEach((vote, j) => {
+              this.bars[i].marks.push(vote.votes[i]);
+            });
+            this.bars[i].marks.sort();
+
+          });
+        });
+
       } else {
         this.errorService.showRouteError();
         this.router.navigate(['home']);
       }
     });
-    this.mainService.votes$.subscribe(res => {
-      this.votes = res;
 
-      this.alternatives.forEach((alt, i) => {
-        this.bars.push({i, marks: []});
-        console.log(this.bars);
-        
-        this.votes.forEach((vote, j) => {
-          this.bars[i].marks.push(vote.votes[i]);
-        });
-        this.bars[i].marks.sort();
-        
-      });
-    });
   }
 
   ngOnInit(): void {
-    
 
     setTimeout(() => {
       if (!this.name) {
@@ -75,7 +80,7 @@ export class MainComponent implements OnInit {
   }
 
   public getNumberOfMarks(marks, i) {
-   return marks.filter(mark => mark === i).length;
+    return marks.filter(mark => mark === i).length;
   }
 
 }

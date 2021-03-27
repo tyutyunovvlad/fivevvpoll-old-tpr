@@ -21,7 +21,6 @@ export class CreateDialogComponent implements AfterViewInit {
 
   constructor(private mainService: MainService, public dialog: MatDialog, private errorService: ErrorService) {
     this.metrics = this.mainService.metrics;
-    console.log(this.metrics);
     
     this.form = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.maxLength(50)]),

@@ -18,6 +18,7 @@ export interface IData {
 export interface IVote {
   name: string;
   votes: Array<string | number>;
+  time?: string;
 }
 
 @Injectable({
@@ -108,8 +109,8 @@ export class MainService {
 
     this.ref.get().pipe(take(1)).subscribe(res => {
 
-      let data: any = res.docs.map(doc => doc.data());
-      let coll = data.find(el => el.id === id);
+      const data: any = res.docs.map(doc => doc.data());
+      const coll = data.find(el => el.id === id);
 
       if (coll) {
 
@@ -128,8 +129,8 @@ export class MainService {
 
   public checkIfExist(id: string): Observable<boolean> {
     return this.ref.get().pipe(map(res => {
-      let data: any = res.docs.map(doc => doc.data());
-      let coll = data.find(el => el.id === id);
+      const data: any = res.docs.map(doc => doc.data());
+      const coll = data.find(el => el.id === id);
       if (coll) {
         return true;
       }
@@ -144,7 +145,7 @@ export class MainService {
     localStorage.removeItem('id');
   }
 
-  public secret() {
+  public secret(): void {
     this.adminSubj.next(true);
   }
 }
