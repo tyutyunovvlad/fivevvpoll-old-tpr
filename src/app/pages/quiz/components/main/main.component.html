@@ -9,6 +9,7 @@
             <p>Кількість опитуванних: {{votes?.length || 0}}</p>
             <p *ngIf="times[0]">Перша відповідь: {{times[0] | date}}</p>
             <p *ngIf="times[1]">Остання відповідь: {{times[1] | date}}</p>
+            <p style="cursor: pointer;" (click)="copy('https://fivevvpoll.web.app/?id='+code)">Посилання на опитування: <input id="link" style="color: #072949; cursor: pointer;" value="https://fivevvpoll.web.app/?id={{code}}" disabled></p>
         </div>
 
         <div style="color: #072949; text-transform: uppercase; margin-top: 30px;" class="no" *ngIf="!votes?.length"> Ще немає відповідей</div>

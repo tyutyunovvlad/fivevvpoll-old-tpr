@@ -29,6 +29,9 @@ export class MainService {
   private adminSubj = new BehaviorSubject(false);
   public admin$ = this.adminSubj.asObservable();
 
+  private loadingSubj = new BehaviorSubject(false);
+  public loading$ = this.loadingSubj.asObservable();
+
   public metrics = [
     {
       type: 'centered',
@@ -86,6 +89,18 @@ export class MainService {
       const coll = data.find(el => el.id === (this.optionsSubj.value as any).id);
 
       const votes = coll.votes;
+      let i = 0;
+      votes.forEach(el => {
+
+
+        if (el.name === `${vote.name}${i ? ' / ' + i : ''}`) {
+          i++;
+        }
+      });
+      if (i > 0) {
+        vote.name += ' / ' + i;
+      }
+
       votes.push(vote);
       this.votesSubj.next(votes);
       if (this.optionsSubj.value !== 'empty') {
@@ -105,15 +120,19 @@ export class MainService {
   }
 
   public findById(id: string, callback?): void {
-
+    console.log(1);
+    
+    this.loadingSubj.next(true);
 
     this.ref.get().pipe(take(1)).subscribe(res => {
 
       const data: any = res.docs.map(doc => doc.data());
       const coll = data.find(el => el.id === id);
 
+      this.loadingSubj.next(false);
+      console.log(2);
+      
       if (coll) {
-
         this.votesSubj.next(coll.votes);
         this.optionsSubj.next(coll);
         this.router.navigate(['quiz']);
@@ -121,6 +140,7 @@ export class MainService {
         this.dialog.closeAll();
 
       } else if (callback) {
+
         this.optionsSubj.next('empty');
         callback();
       }

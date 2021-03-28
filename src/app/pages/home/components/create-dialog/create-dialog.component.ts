@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorService } from 'src/app/shared/services/error.service';
@@ -10,7 +10,7 @@ import { IData, MainService } from 'src/app/shared/services/main.service';
   templateUrl: './create-dialog.component.html',
   styleUrls: ['./create-dialog.component.scss']
 })
-export class CreateDialogComponent implements AfterViewInit {
+export class CreateDialogComponent implements AfterViewInit, OnDestroy {
 
   public form: FormGroup;
   public alternativesForm: FormGroup | undefined;
@@ -18,6 +18,7 @@ export class CreateDialogComponent implements AfterViewInit {
 
   public selectedMetric = 0;
   public metrics = [];
+  private subs = [];
 
   constructor(private mainService: MainService, public dialog: MatDialog, private errorService: ErrorService) {
     this.metrics = this.mainService.metrics;
@@ -34,9 +35,15 @@ export class CreateDialogComponent implements AfterViewInit {
     document.querySelector('mat-button-toggle:first-child').dispatchEvent(new Event('click'));
   }
 
+  ngOnDestroy(): void {
+    this.subs.forEach(sub => {
+      sub.unsubscribe();
+    });
+  }
+
   public onSubmit(): void {
 
-    this.mainService.checkIfExist(this.form.value.id.trim()).subscribe(exist => {
+    this.subs.push(this.mainService.checkIfExist(this.form.value.id.trim()).subscribe(exist => {
       if (!exist) {
         this.data = {
           name: this.form.value.name.trim(),
@@ -55,7 +62,7 @@ export class CreateDialogComponent implements AfterViewInit {
       } else {
         this.errorService.showCreateError();
       }
-    });
+    }));
 
     
   }
@@ -63,6 +70,15 @@ export class CreateDialogComponent implements AfterViewInit {
   public onSubmitAlternatives(): void {
     // tslint:disable: forin
     for (const i in this.alternativesForm?.value) {
+      for (const j in this.alternativesForm?.value) {
+        if (this.alternativesForm?.value[i] === this.alternativesForm?.value[j] && i !==j) {
+          this.errorService.showAltErrors();
+          return;
+          
+        }
+      }
+      
+      
       this.data.alternatives[i] = this.alternativesForm?.value[i];
     }
 

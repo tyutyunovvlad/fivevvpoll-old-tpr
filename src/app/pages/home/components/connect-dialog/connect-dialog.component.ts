@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { ErrorService } from 'src/app/shared/services/error.service';
 import { MainService } from 'src/app/shared/services/main.service';
 import { ConnectErrorComponent } from '../../../../shared/errors/connect-error/connect-error.component';
 
@@ -16,6 +17,7 @@ export class ConnectDialogComponent implements OnInit {
 
   constructor(
     private mainService: MainService,
+    private errorService: ErrorService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog
   ) { }

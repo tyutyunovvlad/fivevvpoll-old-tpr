@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MainService } from 'src/app/shared/services/main.service';
 import { ConnectDialogComponent } from './components/connect-dialog/connect-dialog.component';
@@ -9,14 +9,20 @@ import { CreateDialogComponent } from './components/create-dialog/create-dialog.
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   disabled = true;
+  private subs = [];
 
   constructor(public dialog: MatDialog, private mainService: MainService) {
-    this.mainService.admin$.subscribe(admin => {
+    this.subs.push(this.mainService.admin$.subscribe(admin => {
       this.disabled = !admin;
-    }) ;
+    })) ;
+  }
+  ngOnDestroy(): void {
+    this.subs.forEach(sub => {
+      sub.unsubscribe();
+    });
   }
 
   ngOnInit(): void {

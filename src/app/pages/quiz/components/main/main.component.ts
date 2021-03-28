@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { RouterErrorComponent } from '../../../../shared/errors/router-error/rou
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
 
   public name: string;
   public votes: Array<IVote>;
@@ -21,6 +21,7 @@ export class MainComponent implements OnInit {
   public code: string;
 
   public times = [];
+  private subs = [];
 
   public bars = [];
 
@@ -31,8 +32,14 @@ export class MainComponent implements OnInit {
     private router: Router,
   ) {
 
+    let id = localStorage.getItem('id');
 
-    this.mainService.options$.subscribe(res => {
+    if (!id) {
+      this.errorService.showRouteError();
+      this.router.navigate(['home']);
+    }
+
+    this.subs.push(this.mainService.options$.subscribe(res => {
 
       if (res !== 'empty') {
         this.name = res.name;
@@ -40,9 +47,10 @@ export class MainComponent implements OnInit {
         this.markType = this.mainService.metrics[res.type].type;
         this.code = res.id;
 
-        this.mainService.votes$.subscribe(res => {
+        this.subs.push(this.mainService.votes$.subscribe(res => {
+
           this.bars = [];
-          
+
           this.votes = res;
           this.times[0] = res[0]?.time;
           this.times[1] = res[res.length - 1]?.time;
@@ -55,24 +63,30 @@ export class MainComponent implements OnInit {
             this.bars[i].marks.sort();
 
           });
-        });
+        }));
 
       } else {
         this.errorService.showRouteError();
         this.router.navigate(['home']);
       }
-    });
+    }));
 
   }
 
   ngOnInit(): void {
 
-    setTimeout(() => {
-      if (!this.name) {
-        this.errorService.showRouteError();
-        this.router.navigate(['home']);
-      }
-    }, 300);
+    // setTimeout(() => {
+    //   if (!this.name) {
+    //     this.errorService.showRouteError();
+    //     this.router.navigate(['home']);
+    //   }
+    // }, 300);
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach(sub => {
+      sub.unsubscribe();
+    });
   }
 
   public newExpert(): void {
@@ -81,6 +95,12 @@ export class MainComponent implements OnInit {
 
   public getNumberOfMarks(marks, i) {
     return marks.filter(mark => mark === i).length;
+  }
+
+  public copy(text) {
+    navigator.clipboard.writeText(text);
+
+    this.errorService.showCopied();
   }
 
 }

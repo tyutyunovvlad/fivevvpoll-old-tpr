@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ErrorService } from 'src/app/shared/services/error.service';
@@ -10,7 +10,7 @@ import { RouterErrorComponent } from '../../../../shared/errors/router-error/rou
   templateUrl: './voting-page.component.html',
   styleUrls: ['./voting-page.component.scss']
 })
-export class VotingPageComponent implements OnInit {
+export class VotingPageComponent implements OnInit, OnDestroy {
 
   public name: string;
   public expertName: string;
@@ -18,13 +18,14 @@ export class VotingPageComponent implements OnInit {
   public alternatives: Array<string>;
 
   public marks = [];
+  private subs = [];
 
   constructor(
     private mainService: MainService,
     private router: Router,
     private errorService: ErrorService
   ) {
-    this.mainService.options$.subscribe(res => {
+    this.subs.push(this.mainService.options$.subscribe(res => {
       if (res !== 'empty') {
         this.name = res.name;
         this.expertName = this.mainService.votingName;
@@ -39,6 +40,12 @@ export class VotingPageComponent implements OnInit {
 
         this.router.navigate(['home']);
       }
+    }));
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach(sub => {
+      sub.unsubscribe();
     });
   }
 

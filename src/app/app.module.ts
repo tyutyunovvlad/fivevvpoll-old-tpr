@@ -21,9 +21,12 @@ import { AngularFireModule } from '@angular/fire';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { ConnectErrorComponent } from './shared/errors/connect-error/connect-error.component';
 import { CreateErrorComponent } from './shared/errors/create-error/create-error.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import { registerLocaleData } from '@angular/common';
 import localeUa from '@angular/common/locales/uk';
+import { CopiedComponent } from './shared/errors/copied/copied.component';
+import { AlternativesComponent } from './shared/errors/alternatives/alternatives.component';
 
 registerLocaleData(localeUa, 'ua');
 
@@ -35,6 +38,12 @@ const firebaseConfig = {
   storageBucket: 'tpr-quiz.appspot.com',
   messagingSenderId: '284856723267',
   appId: '1:284856723267:web:459c997606649b777db1f6'
+  // apiKey: "AIzaSyAm1APdRt9H3n0BvMpUw0JbpGPsD9wcd9I",
+  // authDomain: "fivevvpoll.firebaseapp.com",
+  // projectId: "fivevvpoll",
+  // storageBucket: "fivevvpoll.appspot.com",
+  // messagingSenderId: "317894793893",
+  // appId: "1:317894793893:web:992fbf0297b6423bfc4b4c"
 };
 @NgModule({
   declarations: [
@@ -46,6 +55,8 @@ const firebaseConfig = {
     ConnectDialogComponent,
     ConnectErrorComponent,
     CreateErrorComponent,
+    CopiedComponent,
+    AlternativesComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +72,8 @@ const firebaseConfig = {
     MatInputModule,
     MatIconModule,
     MatButtonToggleModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressSpinnerModule
   ],
   providers: [{provide: LOCALE_ID, useValue: 'ua'}],
   bootstrap: [AppComponent]

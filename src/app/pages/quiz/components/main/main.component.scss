@@ -57,6 +57,7 @@
         .line {
             display: flex;
             align-items: center;
+            user-select: none;
             .total {
                 margin-left: 15px;
             }
@@ -101,7 +102,6 @@
         }
     }
 }
-
 @media screen and (max-width: 550px) {
     .wrapper {
         .res-1 {
@@ -126,7 +126,6 @@
         }
     }
 }
-
 .wrapper {
     &.centered {
         .mark {
@@ -170,3 +169,15 @@
         }
     }
 }
+
+#link {
+    background: none;
+    outline: none;
+    border: none;
+    width: 50%;
+
+    @media screen and (max-width: 600px) {
+        width: 100%;
+    }
+}
+

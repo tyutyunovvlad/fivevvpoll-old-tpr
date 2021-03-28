@@ -1,14 +1,5 @@
 {
-  "targets": {
-    "tpr-quiz": {
-      "hosting": {
-        "tpr": [
-          "tpr-quiz"
-        ]
-      }
-    }
-  },
   "projects": {
-    "default": "tpr-quiz"
+    "default": "fivevvpoll"
   }
 }

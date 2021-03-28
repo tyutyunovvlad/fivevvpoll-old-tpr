@@ -10,8 +10,14 @@
         background-color: #082f54;
     }
 
-    pre {
-        font-size: 14px;
+    p {
+        font-size: 16px;
         line-height: normal;
+    }
+
+    @media screen and (max-width: 500px) {
+        p {
+            font-size: 14px;
+        } 
     }
 }
